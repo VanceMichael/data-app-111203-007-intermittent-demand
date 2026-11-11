@@ -126,6 +126,13 @@ class RecordsTest(unittest.TestCase):
             self.assertEqual(run.returncode, 2)
             self.assertFalse(path.exists())
 
+    def test_domain_boundary(self):
+        first, second = copy.deepcopy(self.records[:2])
+        first.update(sold=0, available_hours=0)
+        result = describe([first])
+        self.assertEqual(result['sales_value'], 0)
+        self.assertEqual(result['available_hours'], 0)
+
 
 if __name__ == '__main__':
     unittest.main()
