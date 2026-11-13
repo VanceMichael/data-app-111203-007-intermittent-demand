@@ -1,0 +1,26 @@
+{
+  "currency": "CNY",
+  "description": "长尾配件补货回测成本参数；金额仅为合成演示，不对应现实机构",
+  "costs": {
+    "shortage_cost_per_unit": 60.0,
+    "holding_cost_per_unit_per_day": 1.5,
+    "order_cost_per_order": 25.0
+  },
+  "settings": {
+    "min_history_days": 3,
+    "recent_window_days": 7,
+    "availability_window_days": 7,
+    "croston_alpha": 0.1,
+    "min_selection_windows": 3,
+    "default_model": "exposure_hurdle",
+    "exclude_promotion_from_training": true,
+    "exclude_promotion_from_evaluation": true,
+    "max_stockout_rate": 0.25,
+    "stockout_rate_tolerance": 0.05,
+    "min_order_quantile": 0.5,
+    "max_order_quantile": 0.95,
+    "candidate_quantiles": [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95],
+    "demand_sensitivity_factors": [0.0, 0.5, 1.0],
+    "report_quantiles": [0.5, 0.8, 0.9, 0.95]
+  }
+}

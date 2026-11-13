@@ -5,6 +5,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from .backtest import run_backtest
+from .config import config_fingerprint, load_config, normalize_config
 from .io import load_records
 from .summary import summarize
 
@@ -31,9 +33,17 @@ def main():
     summary = commands.add_parser('summary', help='按业务维度核对观测口径')
     summary.add_argument('--input', type=Path, default=Path('data/observations.csv'))
     summary.add_argument('--output', type=Path)
+    backtest = commands.add_parser('backtest', help='按 SKU 提前期的滚动补货回测')
+    backtest.add_argument('--input', type=Path, default=Path('data/observations.csv'))
+    backtest.add_argument('--config', type=Path, default=Path('config/replenishment.json'),
+                          help='缺货/持有成本与回测参数配置')
+    backtest.add_argument('--output', type=Path)
     args = parser.parse_args()
     try:
-        result = summarize(load_records(args.input))
+        if args.command == 'summary':
+            result = summarize(load_records(args.input))
+        else:
+            result = run_backtest(load_records(args.input), load_config(args.config))
         if args.output:
             save_json(args.output, result)
         print(json.dumps(result, ensure_ascii=False, sort_keys=True, allow_nan=False))
